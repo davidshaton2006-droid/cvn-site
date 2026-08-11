@@ -13,26 +13,103 @@ document.querySelectorAll('.faq-q').forEach(btn=>{
     if(!wasOpen) item.classList.add('open');
   });
 });
-const CALC_RATE = { flat:95000, house:70000, commerce:80000, land:9000 };
-function formatRub(n){ return Math.round(n/1000)*1000 <= 0 ? '0 ₽' : new Intl.NumberFormat('ru-RU').format(Math.round(n/1000)*1000) + ' ₽'; }
-document.querySelectorAll('.calc-card').forEach(card=>{
-  const type = card.querySelector('.calcType');
-  const city = card.querySelector('.calcCity');
-  const area = card.querySelector('.calcArea');
-  const urgency = card.querySelector('.calcUrgency');
-  const out = card.querySelector('.calc-result-value');
-  function compute(){
-    const rate = CALC_RATE[type.value] || 90000;
-    const mult = parseFloat(city.value) || 1;
-    const a = Math.max(parseFloat(area.value) || 0, 0);
-    const market = rate * mult * a;
-    const fast = urgency.value === 'fast';
-    const low = market * (fast ? 0.70 : 0.82);
-    const high = market * (fast ? 0.80 : 0.90);
-    out.textContent = a > 0 ? `${formatRub(low)} – ${formatRub(high)}` : '—';
+const DIAG_ROUTES = {
+  sell:{ page:'vykup.html', title:'Срочный выкуп недвижимости', text:'Покупаем объект напрямую, без показов и ожидания «своего» покупателя. Оценка — за 24 часа.' },
+  cash:{ page:'zaymy.html', title:'Займ под залог недвижимости', text:'Получаете деньги, объект остаётся в вашей собственности — только залог на срок займа.' },
+  invest:{ page:'investoram.html', title:'Инвестиции в недвижимость', text:'Капитал работает на конкретный объект — покупку, подготовку и продажу ведёт компания.' }
+};
+const DIAG_TIME = {
+  sell:{ urgent:'2–3 дня после осмотра объекта', month:'7–14 дней от заявки до расчёта', flex:'по вашему графику, от 7 дней' },
+  cash:{ urgent:'1–3 дня на решение и договор', month:'до 7 дней от заявки до денег', flex:'по договорённости, без спешки' },
+  invest:{ urgent:'подбор объекта — от нескольких дней', month:'подбор объекта — 2–4 недели', flex:'без ограничения по срокам' }
+};
+const DIAG_ISSUE_TEXT = {
+  mortgage:'учтём остаток по ипотеке при расчёте суммы',
+  owners:'проверим доли всех собственников и распределим сумму',
+  lien:'потребуется юридическая проверка обременения перед сделкой',
+  none:'дополнительная юридическая проверка не потребуется'
+};
+document.querySelectorAll('.diag-card').forEach(card=>{
+  const state = { goal:null, speed:null, issues:[] };
+  let step = 1;
+  const steps = card.querySelectorAll('.diag-step');
+  const dots = card.querySelectorAll('.diag-dot');
+  const result = card.querySelector('.diag-result');
+  const progress = card.querySelector('.diag-progress');
+
+  function showStep(n){
+    step = n;
+    steps.forEach(s=>s.classList.toggle('active', Number(s.dataset.step) === n));
+    result.classList.remove('active');
+    dots.forEach(d=>{
+      const ds = Number(d.dataset.step);
+      d.classList.toggle('active', ds === n);
+      d.classList.toggle('done', ds < n);
+    });
   }
-  [type, city, area, urgency].forEach(el=>el && el.addEventListener('input', compute));
-  compute();
+
+  card.querySelectorAll('.diag-step[data-step="1"] .diag-opt, .diag-step[data-step="2"] .diag-opt').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const key = btn.dataset.key, value = btn.dataset.value;
+      state[key] = value;
+      btn.parentElement.querySelectorAll('.diag-opt').forEach(o=>o.classList.remove('sel'));
+      btn.classList.add('sel');
+      setTimeout(()=> showStep(step + 1), 220);
+    });
+  });
+
+  const issueOpts = card.querySelectorAll('.diag-step[data-step="3"] .diag-opt');
+  const nextBtn = card.querySelector('.diag-next');
+  issueOpts.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const value = btn.dataset.value;
+      if(value === 'none'){
+        issueOpts.forEach(o=>o.classList.remove('sel'));
+        btn.classList.add('sel');
+        state.issues = ['none'];
+      } else {
+        btn.classList.toggle('sel');
+        card.querySelector('.diag-opt[data-value="none"]').classList.remove('sel');
+        state.issues = Array.from(issueOpts).filter(o=>o.classList.contains('sel')).map(o=>o.dataset.value);
+      }
+      nextBtn.classList.toggle('ready', state.issues.length > 0);
+    });
+  });
+
+  card.querySelectorAll('.diag-back').forEach(btn=>{
+    btn.addEventListener('click', ()=> showStep(Math.max(1, step - 1)));
+  });
+
+  if(nextBtn){
+    nextBtn.addEventListener('click', ()=>{
+      if(!state.goal || state.issues.length === 0) return;
+      const route = DIAG_ROUTES[state.goal];
+      const time = (DIAG_TIME[state.goal] || {})[state.speed] || 'уточним после заявки';
+      const notes = state.issues.map(i => DIAG_ISSUE_TEXT[i]).filter(Boolean);
+      const noteText = notes.length ? notes.join('; ') : 'дополнительная юридическая проверка не потребуется';
+
+      result.querySelector('.diag-result-title').textContent = route.title;
+      result.querySelector('.diag-result-text').textContent = route.text;
+      result.querySelector('.diag-result-time').textContent = time;
+      result.querySelector('.diag-result-note').textContent = noteText.charAt(0).toUpperCase() + noteText.slice(1);
+      result.querySelector('.diag-result-link').href = route.page;
+
+      steps.forEach(s=>s.classList.remove('active'));
+      dots.forEach(d=>d.classList.add('done'));
+      if(progress) progress.style.display = 'none';
+      result.classList.add('active');
+    });
+  }
+
+  card.querySelectorAll('.diag-restart').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.goal = null; state.speed = null; state.issues = [];
+      card.querySelectorAll('.diag-opt').forEach(o=>o.classList.remove('sel'));
+      if(nextBtn) nextBtn.classList.remove('ready');
+      if(progress) progress.style.display = '';
+      showStep(1);
+    });
+  });
 });
 document.querySelectorAll('.leadForm').forEach(form=>{
   form.addEventListener('submit', (e)=>{

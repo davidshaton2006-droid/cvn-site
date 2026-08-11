@@ -31,7 +31,7 @@
     </div>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#contact">Оставить заявку</a>
-      <a class="btn btn-outline" href="#calc">Рассчитать стоимость →</a>
+      <a class="btn btn-outline" href="#diag">Подобрать решение →</a>
     </div>
     <div class="trust-strip">
       <div class="trust-item"><div class="num"><span>~20</span></div><div class="lbl">лет на рынке недвижимости</div></div>
@@ -42,38 +42,63 @@
   </div>
 </section>
 
-<section class="section calc-section" id="calc">
+<section class="section diag-section" id="diag">
   <div class="wrap">
-    <div class="calc-card">
-      <div class="calc-badge">Только у ЦВН · Мгновенный расчёт</div>
-      <div class="calc-grid">
-        <div class="calc-form">
-          <h3>Узнайте ориентировочную сумму выкупа за 20 секунд</h3>
-          <p>Ни у одной компании в крае нет открытого калькулятора выкупа. Введите параметры объекта — точную сумму назовём после осмотра, в течение 24 часов.</p>
-          <div class="calc-row">
-            <div class="calc-field"><label>Тип объекта</label>
-              <select class="calcType"><option value="flat">Квартира</option><option value="house">Дом</option><option value="commerce">Коммерция</option><option value="land">Земля</option></select>
-            </div>
-            <div class="calc-field"><label>Город</label>
-              <select class="calcCity">
-                <option value="1.15">Краснодар</option><option value="1.35">Сочи</option><option value="1.0">Анапа</option>
-                <option value="0.95">Новороссийск</option><option value="1.0">Геленджик</option><option value="0.85">Симферополь</option>
-                <option value="1.1">Ялта</option><option value="0.85">Севастополь</option><option value="0.7">Другой город</option>
-              </select>
-            </div>
-          </div>
-          <div class="calc-row">
-            <div class="calc-field"><label>Площадь, м²</label><input class="calcArea" type="number" min="1" value="45"></div>
-            <div class="calc-field"><label>Срочность сделки</label>
-              <select class="calcUrgency"><option value="standard">Стандартная (7–14 дней)</option><option value="fast">Срочная (2–3 дня)</option></select>
-            </div>
-          </div>
+    <div class="diag-card">
+      <div class="diag-badge">Только у ЦВН · Персональная диагностика</div>
+      <div class="diag-head">
+        <h3>За 3 вопроса подберём решение под вашу ситуацию</h3>
+        <p>Не общий совет, а конкретное направление, ожидаемые сроки и на что обратить внимание именно в вашем случае.</p>
+      </div>
+      <div class="diag-progress">
+        <span class="diag-dot active" data-step="1"></span><span class="diag-dot" data-step="2"></span><span class="diag-dot" data-step="3"></span>
+      </div>
+
+      <div class="diag-step active" data-step="1">
+        <div class="diag-q">Что для вас сейчас главное?</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-key="goal" data-value="sell">Продать объект быстро</button>
+          <button type="button" class="diag-opt" data-key="goal" data-value="cash">Получить деньги, но не продавать</button>
+          <button type="button" class="diag-opt" data-key="goal" data-value="invest">Вложить капитал в недвижимость</button>
         </div>
-        <div class="calc-result">
-          <span class="calc-result-label">Ориентировочная сумма выкупа</span>
-          <div class="calc-result-value">—</div>
-          <span class="calc-result-note">Предварительный расчёт, не является офертой. Точную сумму называем после осмотра объекта и проверки документов.</span>
-          <a class="btn btn-primary calc-cta" href="#contact">Получить точную оценку</a>
+      </div>
+
+      <div class="diag-step" data-step="2">
+        <div class="diag-q">Как быстро нужно решение?</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-key="speed" data-value="urgent">В течение недели</button>
+          <button type="button" class="diag-opt" data-key="speed" data-value="month">В течение месяца</button>
+          <button type="button" class="diag-opt" data-key="speed" data-value="flex">Сроки не горят</button>
+        </div>
+        <div class="diag-step-actions"><button type="button" class="diag-back">← Назад</button></div>
+      </div>
+
+      <div class="diag-step" data-step="3">
+        <div class="diag-q">Есть ли сложности с объектом? Можно выбрать несколько</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-value="mortgage">Ипотека или долги</button>
+          <button type="button" class="diag-opt" data-value="owners">Несколько собственников</button>
+          <button type="button" class="diag-opt" data-value="lien">Арест / обременение</button>
+          <button type="button" class="diag-opt" data-value="none">Всё чисто, сложностей нет</button>
+        </div>
+        <div class="diag-step-actions">
+          <button type="button" class="diag-back">← Назад</button>
+          <button type="button" class="btn btn-primary btn-sm diag-next">Показать результат →</button>
+        </div>
+      </div>
+
+      <div class="diag-result">
+        <span class="diag-result-label">Ваш маршрут</span>
+        <div class="diag-result-title">—</div>
+        <p class="diag-result-text">—</p>
+        <div class="diag-result-meta">
+          <div><span>Ожидаемые сроки</span><b class="diag-result-time">—</b></div>
+          <div><span>На что обратить внимание</span><b class="diag-result-note">—</b></div>
+        </div>
+        <div class="diag-result-ctas">
+          <a class="btn btn-primary diag-result-link" href="vykup.html">Перейти к направлению →</a>
+          <a class="btn btn-outline" href="#contact">Оставить заявку</a>
+          <button type="button" class="diag-restart">Пройти заново</button>
         </div>
       </div>
     </div>
