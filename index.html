@@ -31,12 +31,76 @@
     </div>
     <div class="hero-ctas">
       <a class="btn btn-primary" href="#contact">Оставить заявку</a>
+      <a class="btn btn-outline" href="#diag">Подобрать решение →</a>
     </div>
     <div class="trust-strip">
       <div class="trust-item"><div class="num"><span>~20</span></div><div class="lbl">лет на рынке недвижимости</div></div>
       <div class="trust-item"><div class="num"><span>24</span>ч</div><div class="lbl">на оценку объекта</div></div>
       <div class="trust-item"><div class="num"><span>2</span></div><div class="lbl">региона работы</div></div>
       <div class="trust-item"><div class="num"><span>1</span></div><div class="lbl">офис в Краснодаре</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section diag-section" id="diag">
+  <div class="wrap">
+    <div class="diag-card">
+      <div class="diag-badge">Только у ЦВН · Персональная диагностика</div>
+      <div class="diag-head">
+        <h3>За 3 вопроса подберём решение под вашу ситуацию</h3>
+        <p>Не общий совет, а конкретное направление, ожидаемые сроки и на что обратить внимание именно в вашем случае.</p>
+      </div>
+      <div class="diag-progress">
+        <span class="diag-dot active" data-step="1"></span><span class="diag-dot" data-step="2"></span><span class="diag-dot" data-step="3"></span>
+      </div>
+
+      <div class="diag-step active" data-step="1">
+        <div class="diag-q">Что для вас сейчас главное?</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-key="goal" data-value="sell">Продать объект быстро</button>
+          <button type="button" class="diag-opt" data-key="goal" data-value="cash">Получить деньги, но не продавать</button>
+          <button type="button" class="diag-opt" data-key="goal" data-value="invest">Вложить капитал в недвижимость</button>
+        </div>
+      </div>
+
+      <div class="diag-step" data-step="2">
+        <div class="diag-q">Как быстро нужно решение?</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-key="speed" data-value="urgent">В течение недели</button>
+          <button type="button" class="diag-opt" data-key="speed" data-value="month">В течение месяца</button>
+          <button type="button" class="diag-opt" data-key="speed" data-value="flex">Сроки не горят</button>
+        </div>
+        <div class="diag-step-actions"><button type="button" class="diag-back">← Назад</button></div>
+      </div>
+
+      <div class="diag-step" data-step="3">
+        <div class="diag-q">Есть ли сложности с объектом? Можно выбрать несколько</div>
+        <div class="diag-opts">
+          <button type="button" class="diag-opt" data-value="mortgage">Ипотека или долги</button>
+          <button type="button" class="diag-opt" data-value="owners">Несколько собственников</button>
+          <button type="button" class="diag-opt" data-value="lien">Арест / обременение</button>
+          <button type="button" class="diag-opt" data-value="none">Всё чисто, сложностей нет</button>
+        </div>
+        <div class="diag-step-actions">
+          <button type="button" class="diag-back">← Назад</button>
+          <button type="button" class="btn btn-primary btn-sm diag-next">Показать результат →</button>
+        </div>
+      </div>
+
+      <div class="diag-result">
+        <span class="diag-result-label">Ваш маршрут</span>
+        <div class="diag-result-title">—</div>
+        <p class="diag-result-text">—</p>
+        <div class="diag-result-meta">
+          <div><span>Ожидаемые сроки</span><b class="diag-result-time">—</b></div>
+          <div><span>На что обратить внимание</span><b class="diag-result-note">—</b></div>
+        </div>
+        <div class="diag-result-ctas">
+          <a class="btn btn-primary diag-result-link" href="vykup.html">Перейти к направлению →</a>
+          <a class="btn btn-outline" href="#contact">Оставить заявку</a>
+          <button type="button" class="diag-restart">Пройти заново</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -168,7 +232,7 @@
 <footer><div class="wrap">
   <div class="footgrid">
     <div>
-      <div class="footbrand"><img src="assets/logo-orange.png" alt="ЦВН"><span>ЦВН</span></div>
+      <div class="footbrand"><img src="assets/logo-ink.png" alt="ЦВН"><span>ЦВН</span></div>
       <p>Центр выкупа недвижимости. Срочный выкуп, займы под залог и инвестиции в недвижимость в Краснодарском крае и Республике Крым.</p>
     </div>
     <div><h4>Направления</h4><a href="vykup.html">Выкуп</a><a href="zaymy.html">Займы</a><a href="investoram.html">Инвесторам</a></div>
