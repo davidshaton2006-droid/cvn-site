@@ -137,3 +137,39 @@ document.querySelectorAll('.leadForm').forEach(form=>{
     form.nextElementSibling.classList.add('show');
   });
 });
+
+(function(){
+  const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!fine || reduce) return;
+
+  const dot = document.createElement('div'); dot.className = 'cursor-dot';
+  const ring = document.createElement('div'); ring.className = 'cursor-ring';
+  document.body.append(dot, ring);
+  document.body.classList.add('cursor-ready');
+
+  let mx = window.innerWidth / 2, my = window.innerHeight / 2, rx = mx, ry = my;
+  const place = (el, x, y) => { el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`; };
+  place(dot, mx, my); place(ring, mx, my);
+
+  window.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    place(dot, mx, my);
+  });
+
+  function loop(){
+    rx += (mx - rx) * 0.18;
+    ry += (my - ry) * 0.18;
+    place(ring, rx, ry);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  const hoverSelector = 'a, button, input, select, textarea, .geo-pin, .faq-q';
+  document.addEventListener('mouseover', e => { if(e.target.closest(hoverSelector)) ring.classList.add('hover'); });
+  document.addEventListener('mouseout', e => { if(e.target.closest(hoverSelector)) ring.classList.remove('hover'); });
+  document.addEventListener('mousedown', () => ring.classList.add('click'));
+  document.addEventListener('mouseup', () => ring.classList.remove('click'));
+  document.addEventListener('mouseleave', () => { dot.style.opacity = '0'; ring.style.opacity = '0'; });
+  document.addEventListener('mouseenter', () => { dot.style.opacity = '1'; });
+})();
