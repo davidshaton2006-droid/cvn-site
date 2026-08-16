@@ -130,7 +130,7 @@ document.querySelectorAll('.diag-card').forEach(card=>{
     });
   });
 });
-const LEAD_WORKER_URL = 'https://cvn-lead-relay.YOUR-SUBDOMAIN.workers.dev';
+const LEAD_WORKER_URL = 'https://cvn-site.romantik-baza.workers.dev';
 document.querySelectorAll('.leadForm').forEach(form=>{
   const submitBtn = form.querySelector('button[type="submit"]');
   const errNote = document.createElement('p');
