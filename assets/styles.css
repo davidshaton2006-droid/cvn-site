@@ -239,6 +239,7 @@ nav.mainnav a:hover, nav.mainnav a.active{color:var(--green);}
 .field input:focus,.field select:focus,.field textarea:focus{border-color:var(--green);outline:none;}
 .field textarea{resize:vertical;min-height:100px;}
 .formnote{font-size:13px;color:var(--grey-light);margin-top:12px;}
+.formerror{font-size:13px;color:#B3402F;margin-top:12px;}
 .success-box{display:none;background:var(--ink);color:var(--on-dark);padding:36px;text-align:center;}
 .success-box.show{display:block;}
 .success-box h3{color:var(--on-dark);font-size:20px;}
