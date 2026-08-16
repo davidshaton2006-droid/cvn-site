@@ -130,11 +130,47 @@ document.querySelectorAll('.diag-card').forEach(card=>{
     });
   });
 });
+const LEAD_WORKER_URL = 'https://cvn-lead-relay.YOUR-SUBDOMAIN.workers.dev';
 document.querySelectorAll('.leadForm').forEach(form=>{
+  const submitBtn = form.querySelector('button[type="submit"]');
+  const errNote = document.createElement('p');
+  errNote.className = 'formerror';
+  errNote.hidden = true;
+  form.appendChild(errNote);
+
   form.addEventListener('submit', (e)=>{
     e.preventDefault();
-    form.style.display='none';
-    form.nextElementSibling.classList.add('show');
+    errNote.hidden = true;
+    const data = new FormData(form);
+    const payload = {
+      name: data.get('name') || '',
+      phone: data.get('phone') || '',
+      topic: data.get('topic') || '',
+      comment: data.get('comment') || '',
+      page: location.pathname.split('/').pop() || 'index.html',
+    };
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = 'Отправляем…';
+
+    fetch(LEAD_WORKER_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+      .then(res => { if(!res.ok) throw new Error('request_failed'); })
+      .then(() => {
+        form.style.display = 'none';
+        form.nextElementSibling.classList.add('show');
+      })
+      .catch(() => {
+        errNote.textContent = 'Не удалось отправить заявку. Попробуйте ещё раз или напишите нам в Telegram/WhatsApp напрямую.';
+        errNote.hidden = false;
+      })
+      .finally(() => {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalLabel;
+      });
   });
 });
 

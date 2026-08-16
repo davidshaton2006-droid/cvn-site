@@ -131,19 +131,19 @@
     <div class="contact-grid" style="margin-top:64px;">
       <div>
         <form class="leadForm">
-          <div class="field"><label>Имя</label><input type="text" placeholder="Как к вам обращаться" required></div>
-          <div class="field"><label>Телефон</label><input type="tel" placeholder="+7 ___ ___-__-__" required></div>
+          <div class="field"><label>Имя</label><input type="text" name="name" placeholder="Как к вам обращаться" required></div>
+          <div class="field"><label>Телефон</label><input type="tel" name="phone" placeholder="+7 ___ ___-__-__" required></div>
           <div class="field"><label>Тема обращения</label>
-            <select>
+            <select name="topic">
               <option>Срочный выкуп недвижимости</option>
               <option>Займ под залог недвижимости</option>
               <option selected>Инвестиции в недвижимость</option>
               <option>Другой вопрос</option>
             </select>
           </div>
-          <div class="field"><label>Комментарий</label><textarea placeholder="Кратко опишите объект или ситуацию"></textarea></div>
+          <div class="field"><label>Комментарий</label><textarea name="comment" placeholder="Кратко опишите объект или ситуацию"></textarea></div>
           <div><button type="submit" class="btn btn-primary">Отправить заявку</button></div>
-          <p class="formnote">Форма — визуальный прототип; для реальной отправки и интеграции с Telegram нужно подключить бэкенд (обсуждается отдельно).</p>
+          <p class="formnote">Заявка приходит нам в Telegram сразу после отправки.</p>
         </form>
         <div class="success-box"><h3>Заявка принята</h3><p>Мы свяжемся с вами в ближайшее время.</p></div>
       </div>
